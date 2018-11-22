@@ -10,7 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/node": "^10.12.10",
     "@types/puppeteer": "^1.10.0",
+    "googleapis": "^27.0.0",
     "puppeteer": "^1.10.0"
   },
   "devDependencies": {

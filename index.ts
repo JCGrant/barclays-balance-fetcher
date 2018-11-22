@@ -1,4 +1,5 @@
 import puppeteer from 'puppeteer';
+import { updateSheet } from './google-sheets';
 
 async function getRequestedMemorableWordCharacters(
   page: puppeteer.Page,
@@ -74,6 +75,7 @@ async function main() {
   const balance = await getBalance(page);
   console.log('balance:', balance);
   await browser.close();
+  updateSheet(balance);
 }
 
 main();
