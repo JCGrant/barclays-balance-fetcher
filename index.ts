@@ -58,11 +58,9 @@ async function login(
   ]);
 }
 
-function getLoginDetails(): LoginDetails {
-  return require('./secrets/bank-login.json');
-}
+const BANK_LOGIN_PATH = './secrets/bank-login.json';
 
-const barclaysLoginUrl =
+const BARCLAYS_LOGIN_URL =
   'https://bank.barclays.co.uk/olb/authlogin/loginAppContainer.do';
 
 async function main() {
@@ -71,8 +69,8 @@ async function main() {
     //slowMo: 250,
   });
   const page = await browser.newPage();
-  await page.goto(barclaysLoginUrl, { waitUntil: 'networkidle2' });
-  await login(page, getLoginDetails());
+  await page.goto(BARCLAYS_LOGIN_URL, { waitUntil: 'networkidle2' });
+  await login(page, require(BANK_LOGIN_PATH));
   const balance = await getBalance(page);
   console.log('balance:', balance);
   await browser.close();
