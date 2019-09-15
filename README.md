@@ -22,7 +22,7 @@ EOT
 cat << EOT > spreadsheet-details.json
 {
   "id": "XXXXXXXXXXXXXXXXXXXX",
-  "appendColumn": "X"
+  "appendColumns": ["X", "X"]
 }
 EOT
 ```
@@ -53,14 +53,14 @@ Where each field should be fairly self explanatory.
 ```
 {
   "id": "XXXXXXXXXXXXXXXXXXXX",
-  "appendColumn": "X"
+  "appendColumns": ["X", "X"]
 }
 ```
 
 Where:
 
 - `id` is id of your spreadsheet, found in the url of your sheet: https://docs.google.com/spreadsheets/d/XXXXXXXXXXXXXXXXXXXX/edit#gid=0
-- `appendColumn` is the column you want the values to be added to each time you run the script.
+- `appendColumns` is a list of columns you want the balances to be added to each time you run the script. This must be less than or equal to the number of accounts you have.
 
 Edit the all the fields with your respective values.
 

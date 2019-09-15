@@ -11,12 +11,14 @@ async function getRequestedMemorableWordCharacters(
   return indices.map(i => memorableWord[i]);
 }
 
-async function getBalance(page: puppeteer.Page): Promise<number> {
+async function getBalances(page: puppeteer.Page): Promise<number[]> {
   await page.waitForSelector('.o-account__balance-head');
-  const element = await page.$('.o-account__balance-head');
-  const text = await page.evaluate(element => element.textContent, element);
-  const balanceStr = text.trim().replace('£', '').replace(',', '');
-  return parseFloat(balanceStr);
+  const elements = await page.$$('.o-account__balance-head');
+  return Promise.all(elements.map(async (element) => {
+    const text = await page.evaluate(element => element.textContent, element);
+    const balanceStr = text.trim().replace('£', '').replace(',', '');
+    return parseFloat(balanceStr);
+  }));
 }
 
 interface LoginDetails {
@@ -79,12 +81,12 @@ async function main() {
   await page.goto(BARCLAYS_LOGIN_URL, { waitUntil: 'networkidle2' });
   console.log('logging in...');
   await login(page, require(BANK_LOGIN_PATH));
-  console.log('getting balance...');
-  const balance = await getBalance(page);
-  console.log('balance:', balance);
+  console.log('getting balances...');
+  const balances = await getBalances(page);
+  console.log('balances:', balances);
   await browser.close();
   console.log('updating sheet...');
-  updateSheet(balance);
+  updateSheet(balances);
 }
 
 main();
