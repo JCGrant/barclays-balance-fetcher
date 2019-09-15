@@ -16,7 +16,7 @@ export function updateSheet(balances: number[]) {
       sheets.spreadsheets.values.append(
         {
           spreadsheetId: spreadsheetDetails.id,
-          range: `Sheet1!${appendColumn}1`,
+          range: `${spreadsheetDetails.sheetName}!${appendColumn}1`,
           valueInputOption: 'RAW',
           resource: {
             values: [[balances[i]]],
